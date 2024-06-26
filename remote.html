@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Warp</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .background {
+            background-image: url('light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg'); /* Replace this with the actual URL if hosted online */
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .translucent-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .button:hover {
+            background-color: darkblue;
+        }
+
+        .input-box {
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        let attempts = 0;
+
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password === '15423') {
+                window.location.href = 'admin.html';
+            } else {
+                attempts++;
+                if (attempts >= 3) {
+                    alert('Too many failed attempts. Returning to the main page.');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('Incorrect password. Please try again.');
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="background">
+        <div class="translucent-box">
+            <p>Please enter the password to continue:</p>
+            <input type="password" id="password" class="input-box" placeholder="Enter Password">
+            <button class="button" onclick="checkPassword()">Enter</button>
+        </div>
+    </div>
+</body>
+</html>

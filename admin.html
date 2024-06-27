@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Section</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .background {
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg'); /* Local image */
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .translucent-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: darkblue;
+        }
+
+        .file-list {
+            margin-top: 20px;
+        }
+
+        .upload-form {
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            margin-top: 10px;
+        }
+        .warning {
+        color:red;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="translucent-box">
+            <p>Welcome to the Admin Section</p>
+            <div class="file-list">
+                <p>Available files for download:</p>
+                <a href="files\isolate_interpreter.py" class="button" download>pasai's programing language</a>
+                <a href="files\pain.bat" class="button" download>fok program</a>
+                <!-- Add more files as needed -->
+            </div>
+            <p class="warning">note this is a beta frature it may take upto 2 days to upload<p>
+            <form class="upload-form" action="upload.php" method="post" enctype="multipart/form-data">
+                <label for="fileToUpload">Select file to upload:</label>
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="submit" value="Upload File" name="submit" class="button">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+

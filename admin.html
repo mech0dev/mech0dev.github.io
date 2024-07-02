@@ -61,6 +61,21 @@
         .warning {
         color:red;
         }
+        .music-player {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .music-player select {
+            padding: 10px;
+            font-size: 1em;
+            margin-right: 10px;
+        }
+
+        .music-player audio {
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +88,20 @@
                 <a href="files\goated_program.bat" class="button" download>program</a>
                 <!-- Add more files as needed -->
             </div>
+            <div class="music-player">
+                <select id="songSelect" onchange="playSong()">
+                    <option value="">Select a song</option>
+                    <option value="files\Believer.mp3">Believer</option>
+                    <option value="files\BRODYAGA FUNK.mp3">BRODYAGA funk</option>
+                    <option value="files\DNA.mp3">DNA?</option>
+                    <option value="files\Lost Umbrella.mp3">Lost Umbrella</option>
+                    <option value="files\SKYFALL.mp3">SKYFALL</option>
+                </select>
+                <audio id="audioPlayer" controls>
+                    <source id="audioSource" src="" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
             <p class="warning">note this is a beta frature it may take upto 2 days to upload<p>
             <form class="upload-form" action="upload.php" method="post" enctype="multipart/form-data">
                 <label for="fileToUpload">Select file to upload:</label>
@@ -81,6 +110,24 @@
             </form>
         </div>
     </div>
+    <script>
+    function playSong() {
+        const songSelect = document.getElementById('songSelect');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioSource = document.getElementById('audioSource');
+
+        const selectedSong = songSelect.value;
+        if (selectedSong) {
+            // Replace with the actual storage URL or local URL
+            audioSource.src = `path/to/your/songs/${selectedSong}`;
+            audioPlayer.load();
+            audioPlayer.play();
+        } else {
+            audioPlayer.pause();
+            audioSource.src = "";
+        }
+    }
+</script>
 </body>
 </html>
 

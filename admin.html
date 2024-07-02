@@ -119,7 +119,7 @@
         const selectedSong = songSelect.value;
         if (selectedSong) {
             // Replace with the actual storage URL or local URL
-            audioSource.src = `files/{selectedSong}`;
+            audioSource.src = `{selectedSong}`;
             audioPlayer.load();
             audioPlayer.play();
         } else {

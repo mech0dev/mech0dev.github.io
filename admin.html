@@ -91,11 +91,11 @@
             <div class="music-player">
                 <select id="songSelect" onchange="playSong()">
                     <option value="">Select a song</option>
-                    <option value="files\Believer.mp3">Believer</option>
-                    <option value="files\BRODYAGA FUNK.mp3">BRODYAGA funk</option>
-                    <option value="files\DNA.mp3">DNA?</option>
-                    <option value="files\Lost Umbrella.mp3">Lost Umbrella</option>
-                    <option value="files\SKYFALL.mp3">SKYFALL</option>
+                    <option value="Believer.mp3">Believer</option>
+                    <option value="BRODYAGA FUNK.mp3">BRODYAGA funk</option>
+                    <option value="DNA.mp3">DNA?</option>
+                    <option value="Lost Umbrella.mp3">Lost Umbrella</option>
+                    <option value="SKYFALL.mp3">SKYFALL</option>
                 </select>
                 <audio id="audioPlayer" controls>
                     <source id="audioSource" src="" type="audio/mpeg">
@@ -119,7 +119,7 @@
         const selectedSong = songSelect.value;
         if (selectedSong) {
             // Replace with the actual storage URL or local URL
-            audioSource.src = `{selectedSong}`;
+            audioSource.src = `files/${selectedSong}`;
             audioPlayer.load();
             audioPlayer.play();
         } else {

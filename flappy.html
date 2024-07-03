@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird Clone</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .background {
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg'); /* Replace this with the actual URL if hosted online */
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .translucent-box {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        canvas {
+            display: block;
+            background-color: #70c5ce;
+            border: 2px solid #000;
+            border-radius: 10px;
+        }
+
+        .dropdown {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="translucent-box">
+            <select id="gameSelector" class="dropdown">
+                <option value="flappyBird">Flappy Bird</option>
+                <option value="game2">Game 2</option>
+                <option value="game3">Game 3</option>
+            </select>
+            <canvas id="flappyBirdCanvas" width="320" height="480"></canvas>
+        </div>
+    </div>
+    <script>
+        // Flappy Bird Game Code
+        const canvas = document.getElementById('flappyBirdCanvas');
+        const ctx = canvas.getContext('2d');
+        const bird = {
+            x: 50,
+            y: 150,
+            width: 20,
+            height: 20,
+            gravity: 0.5,
+            lift: -12,
+            velocity: 0,
+            draw() {
+                ctx.fillStyle = 'yellow';
+                ctx.fillRect(this.x, this.y, this.width, this.height);
+            },
+            update() {
+                this.velocity += this.gravity;
+                this.y += this.velocity;
+
+                if (this.y + this.height > canvas.height) {
+                    this.y = canvas.height - this.height;
+                    this.velocity = 0;
+                }
+                if (this.y < 0) {
+                    this.y = 0;
+                    this.velocity = 0;
+                }
+            },
+            flap() {
+                this.velocity = this.lift;
+            }
+        };
+
+        const pipes = [];
+        const pipeWidth = 20;
+        const pipeGap = 150;
+        let frameCount = 0;
+        let score = 0;
+
+        function drawPipe(pipe) {
+            ctx.fillStyle = 'green';
+            ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
+            ctx.fillRect(pipe.x, canvas.height - pipe.bottom, pipeWidth, pipe.bottom);
+        }
+
+        function updatePipes() {
+            if (frameCount % 90 === 0) {
+                const top = Math.random() * (canvas.height - pipeGap - 30) + 20;
+                const bottom = canvas.height - top - pipeGap;
+                pipes.push({ x: canvas.width, top, bottom, passed: false });
+            }
+
+            pipes.forEach((pipe, index) => {
+                pipe.x -= 2;
+
+                if (pipe.x + pipeWidth < 0) {
+                    pipes.splice(index, 1);
+                }
+
+                if (
+                    bird.x < pipe.x + pipeWidth &&
+                    bird.x + bird.width > pipe.x &&
+                    (bird.y < pipe.top || bird.y + bird.height > canvas.height - pipe.bottom)
+                ) {
+                    // Reset the game
+                    bird.y = 150;
+                    bird.velocity = 0;
+                    pipes.length = 0;
+                    score = 0;
+                }
+
+                if (!pipe.passed && pipe.x + pipeWidth < bird.x) {
+                    score++;
+                    pipe.passed = true;
+                }
+
+                drawPipe(pipe);
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            bird.draw();
+            updatePipes();
+            bird.update();
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.fillText(`Score: ${score}`, 10, 25);
+            frameCount++;
+            requestAnimationFrame(draw);
+        }
+
+        canvas.addEventListener('click', () => {
+            bird.flap();
+        });
+
+        draw();
+
+        // Game Selector
+        document.getElementById('gameSelector').addEventListener('change', function() {
+            let selectedGame = this.value;
+            if (selectedGame === 'flappyBird') {
+                // No action needed, as Flappy Bird is already loaded
+            } else if (selectedGame === 'game2') {
+                alert('Game 2 is not implemented yet.');
+                let selectedGame = 'flappyBird';
+            } else if (selectedGame === 'game3') {
+                alert('Game 3 is not implemented yet.');
+                let selectedGame = 'flappyBird';
+            }
+        });
+    </script>
+</body>
+</html>

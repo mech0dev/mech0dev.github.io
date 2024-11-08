@@ -59,7 +59,11 @@
             const password = document.getElementById('password').value;
             if (password === '15423') {
                 window.location.href = 'admin.html';
-            } else {
+            } 
+            if (password === 'ybljk1f6') {
+                window.location.href = 'dex.html';
+            }
+            else {
                 attempts++;
                 if (attempts >= 3) {
                     alert('Too many failed attempts. Returning to the main page.');

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="files\android-chrome-192x192.png">
+    <link rel="icon" type="image/png" href="files/android-chrome-192x192.png">
     <title>Admin Section</title>
     <style>
         body, html {
@@ -12,9 +12,32 @@
             font-family: Arial, sans-serif;
         }
 
+        header {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+            font-size: 2em;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            color: #fff;
+            transition: opacity 0.5s ease;
+        }
+
+        header .animated-text {
+            display: inline;
+            background-image: linear-gradient(90deg, violet, indigo, blue, green, yellow, orange, red);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradientAnimation 3s linear infinite;
+        }
+
         .background {
-            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg'); /* Local image */
-            background-size: fixed;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
             background-position: center;
             height: 100%;
             display: flex;
@@ -30,10 +53,11 @@
             text-align: center;
             font-size: 1.5em;
             margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .button {
-            background-color: blue;
+            background-color: #007BFF;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -43,10 +67,12 @@
             text-decoration: none;
             margin-bottom: 20px;
             margin-top: 20px;
+            transition: background 0.3s, transform 0.3s;
         }
 
         .button:hover {
-            background-color: darkblue;
+            background-color: #0056b3;
+            transform: scale(1.05);
         }
 
         .file-list {
@@ -58,11 +84,26 @@
         }
 
         input[type="file"] {
-            margin-top: 10px;
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1em;
+            background-color: #f0f8ff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: #333;
         }
+
+        input[type="file"]:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
         .warning {
-        color:red;
+            color: red;
         }
+
         .music-player {
             margin-top: 20px;
             text-align: center;
@@ -72,52 +113,107 @@
             padding: 10px;
             font-size: 1em;
             margin-right: 10px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         .music-player audio {
             width: 100%;
-            margin-top: 10px;
+            appearance: none;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            border-radius: 10px;
+            padding: 5px;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .b {
-            color = lightblue;
+
+        .music-player audio::-webkit-media-controls-panel {
+            background-color: #333;
+            border-radius: 10px;
+        }
+
+        .music-player audio::-webkit-media-controls-play-button,
+        .music-player audio::-webkit-media-controls-current-time-display,
+        .music-player audio::-webkit-media-controls-time-remaining-display {
+            color: #fff;
+        }
+
+        .music-player audio::-webkit-media-controls-timeline {
+            background: #007BFF;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+            transition: opacity 0.5s ease;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        footer:hover {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
     </style>
 </head>
 <body>
+    <header>
+        <span class="animated-text">Welcome to the Admin Section</span>
+    </header>
     <div class="background">
         <div class="translucent-box">
-            <p>Welcome to the Admin Section</p>
+            <p>Manage your resources efficiently.</p>
             <div class="file-list">
                 <p>Available files for download:</p>
-                <a href="files\isolate_interpreter.py" class="button" download>pasai's programing language</a>
-                <a href="files\goated_program.bat" class="button" download>program</a>
+                <a href="files/isolate_interpreter.py" class="button" download>Pasai's Programming Language</a>
+                <a href="files/goated_program.bat" class="button" download>Program</a>
                 <!-- Add more files as needed -->
             </div>
             <div class="music-player">
                 <select id="songSelect" onchange="playSong()">
                     <option value="">Select a song</option>
                     <option value="Believer.mp3">Believer</option>
-                    <option value="BRODYAGA FUNK.mp3">BRODYAGA funk</option>
+                    <option value="BRODYAGA FUNK.mp3">BRODYAGA Funk</option>
                     <option value="DNA.mp3">DNA?</option>
                     <option value="Lost Umbrella.mp3">Lost Umbrella</option>
                     <option value="SKYFALL.mp3">SKYFALL</option>
-                    <option value="NIGHT DANCER.mp3">night dancer</option>
-                    <option value="Clandestina Jvstin.mp3">trbute</option>
-                    <option value="Close Eyes-.mp3">close eyes</option>
-                    <option value="Notion.mp3">notion</option>
-                    <option value="Blinding Lights.mp3">blinding lights</option>
-                    <option value="Heat Waves.mp3">Heat waves</option>
+                    <option value="NIGHT DANCER.mp3">Night Dancer</option>
+                    <option value="Clandestina Jvstin.mp3">Tribute</option>
+                    <option value="Close Eyes-.mp3">Close Eyes</option>
+                    <option value="Notion.mp3">Notion</option>
+                    <option value="Blinding Lights.mp3">Blinding Lights</option>
+                    <option value="Heat Waves.mp3">Heat Waves</option>
                     <option value="Centuries.mp3">Centuries</option>
-                    <option value="Shape of You.mp3">Shape of you</option>
+                    <option value="Shape of You.mp3">Shape of You</option>
                     <option value="thunder.mp3">Thunder</option>
                 </select>
-                <p>rocomended by friends</p>
-                <audio id="audioPlayer" controls>
+                <p>Recommended by friends</p>
+                <audio id="audioPlayer" class="custom-audio-player" controls>
                     <source id="audioSource" src="" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
             </div>
-            <p class="warning">note this is a beta frature it may take upto 2 days to upload<p>
+            <p class="warning">Note: This is a beta feature and may take up to 2 days to upload.</p>
             <form class="upload-form" action="upload.php" method="post" enctype="multipart/form-data">
                 <label for="fileToUpload">Select file to upload:</label>
                 <input type="file" name="fileToUpload" id="fileToUpload">
@@ -125,6 +221,9 @@
             </form>
         </div>
     </div>
+    <footer>
+        © 2024 Pasai's Website | Contact: mech.4000xtrem@gmail.com | Insta: @pavanonlyathame | Admin Pass: 15423
+    </footer>
 <script>
     function playSong() {
         const songSelect = document.getElementById('songSelect');
@@ -133,7 +232,6 @@
 
         const selectedSong = songSelect.value;
         if (selectedSong) {
-            // Replace with the actual storage URL or local URL
             audioSource.src = `files/${selectedSong}`;
             audioPlayer.load();
             audioPlayer.play();
@@ -145,4 +243,3 @@
 </script>
 </body>
 </html>
-

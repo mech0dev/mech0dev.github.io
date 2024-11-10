@@ -3,27 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="pasai's remote stuffs,bruh where is pasai's website i need it,hell nah i ain't doing this dawg i cant handle not being able to see pasai's website i will cry if you don't show me the website">
-    <meta name="google-site-verification" content="SLBeHeOTWCPdceBcqcU3WFcXaPYnwN7iYO4-llyYz6c" />
-    <link rel="icon" type="image/png" href="files\android-chrome-192x192.png">
+    <meta name="keywords" content="pasai's remote stuffs, website, tools">
+    <link rel="icon" type="image/png" href="files/android-chrome-192x192.png">
     <link rel="icon" href="android-chrome-192x192.ico">
     <title>Pasai's Remote Stuffs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body, html {
-            height: 100%;
+            min-height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 2em;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            color: #fff;
+            transition: opacity 0.5s ease;
+        }
+
+        header .animated-text {
+            display: inline;
+            background-image: linear-gradient(90deg, violet, indigo, blue, green, yellow, orange, red);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradientAnimation 3s linear infinite;
         }
 
         .background {
-            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg'); /* Replace this with the actual URL if hosted online */
-            background-size: fixed;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
             background-position: center;
-            height: 100%;
+            min-height: 100vh;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            padding-bottom: 60px;
+        }
+
+        .background::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: -1;
         }
 
         .translucent-box {
@@ -32,11 +69,13 @@
             border-radius: 10px;
             text-align: center;
             font-size: 1.5em;
-            margin-bottom: 20px;
+            margin: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .button {
-            background-color: blue;
+            background-color: #007BFF;
+            background-image: linear-gradient(to bottom right, #007BFF, #0056b3);
             color: white;
             padding: 10px 20px;
             border: none;
@@ -45,38 +84,146 @@
             font-size: 1em;
             margin-bottom: 20px;
             margin-top: 20px;
+            transition: background 0.3s, transform 0.3s;
         }
 
         .button:hover {
-            background-color: darkblue;
+            background-image: linear-gradient(to bottom right, #0056b3, #003f7f);
+            transform: scale(1.05);
         }
-        .note {
-            color:darkred;
-            font-size: 1em;
+
+        img {
+            width: 100px;
+            height: auto;
+            border-radius: 100%;
+            transition: transform 0.3s;
+        }
+
+        img:hover {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
             text-align: center;
-            margin-top: 20px;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+            transition: opacity 0.5s ease;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+
+        footer:hover {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Custom text input skin */
+        .custom-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #007BFF;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1em;
+            background-color: #f0f8ff;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: #333;
+        }
+
+        .custom-input:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Custom audio player skin */
+        .custom-audio-player {
+            width: 100%;
+            appearance: none;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            border-radius: 10px;
+            padding: 5px;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-audio-player::-webkit-media-controls-panel {
+            background-color: #333;
+            border-radius: 10px;
+        }
+
+        .custom-audio-player::-webkit-media-controls-play-button,
+        .custom-audio-player::-webkit-media-controls-current-time-display,
+        .custom-audio-player::-webkit-media-controls-time-remaining-display {
+            color: #fff;
+        }
+
+        .custom-audio-player::-webkit-media-controls-timeline {
+            background: #007BFF;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .translucent-box {
+                font-size: 1.2em;
+                margin: 20px;
+            }
+
+            .button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
         }
     </style>
 </head>
 <body>
+    <header>
+        <span class="animated-text">Welcome to Pasai's Remote Stuffs</span>
+    </header>
     <div class="background">
         <div class="translucent-box">
-            <p>Name: Arika.Pavan sai</p>  <img src="files\jo.ht" alt="no pic avavalable" style="width:100px;height:auto;border-radius:100%;">
+            <p>Name: Arika.Pavan Sai</p>
+            <img src="files/jo.ht" alt="no pic available">
             <p>Class: 9</p>
             <p>Section: A</p>
-            <p>School: Timpany icse</p>
+            <p>School: Timpany ICSE</p>
             <p>Congrats on finding my website</p>
-            <p>maybe usefull 1) binary,</p>
-            <p>2) hex,</p>
-            <p>3) morse,</p>
-            <p>4) base64,</p>
-            <p>5) base64 and binary,</p>
-            <p>6) base64</p>
-            <p>pls charity to me</p>
-            <img src="files\jo.jpg" alt="badge-1" style="width:100px;height:auto;border-radius:100%;">
+            <p>Useful tools:</p>
+            <ul style="list-style-type: none; padding: 0;">
+                <li>1) Binary</li>
+                <li>2) Hex</li>
+                <li>3) Morse</li>
+                <li>4) Base64</li>
+                <li>5) Base64 and Binary</li>
+                <li>6) Base64</li>
+            </ul>
+            <p>Pls charity to me</p>
+            <img src="files/jo.jpg" alt="badge-1">
         </div>
         <button class="button" onclick="location.href='remote.html'">Remote Warp</button>
-        <button class="button" onclick="location.href='flappy.html'">game?</button>
+        <button class="button" onclick="location.href='flappy.html'">Game?</button>
     </div>
+    <footer>
+        © 2024 Pasai's Website | Contact: mech.4000xtrem@gmail.com | 15423 is the pass for the admin section in remote warp | insta id @pavanonlyathame pls follow
+    </footer>
 </body>
 </html>

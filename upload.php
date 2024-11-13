@@ -1,19 +1,18 @@
-$target_dir = "files/";
-$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+<?php
+$targetDir = "files/"; // Directory where files will be stored
+$targetFile = $targetDir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
-$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+$fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-// List of disallowed file types
-$disallowed_types = array("exe", "msi", "class", "jar", "js", "html", "css", "bat");
-
-// Check if file type is disallowed
-if (in_array($fileType, $disallowed_types)) {
-    echo "Sorry, this file type is not allowed.";
+// Check if the file is a valid type (optional)
+$allowedTypes = ['jpg', 'jpeg', 'png', 'gif', 'mp3', 'mp4', 'pdf', 'txt', 'pdf', 'ppt', 'docx', 'ctc', 'zo'];
+if (!in_array($fileType, $allowedTypes)) {
+    echo "Sorry, only JPG, JPEG, PNG, GIF, MP3, MP4, PDF, and TXT files are allowed.";
     $uploadOk = 0;
 }
 
-// Check file size
-if ($_FILES["fileToUpload"]["size"] > 64000000) { // 64MB limit
+// Check file size (optional)
+if ($_FILES["fileToUpload"]["size"] > 50000000) { // 5MB limit
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
 }
@@ -21,12 +20,13 @@ if ($_FILES["fileToUpload"]["size"] > 64000000) { // 64MB limit
 // Check if $uploadOk is set to 0 by an error
 if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
-// If everything is ok, try to upload file
 } else {
-    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
+    // Try to move the uploaded file to the target directory
+    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
+        echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
 }
+?>
 

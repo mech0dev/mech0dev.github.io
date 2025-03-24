@@ -16,7 +16,7 @@
         }
 
         .background {
-            background-image: url('files/light-blue-green-background-with-bubbles.jpg');
+             background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -25,6 +25,58 @@
             align-items: center;
             flex-direction: column;
             padding-bottom: 60px;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 2em;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            color: #fff;
+            transition: opacity 0.5s ease;
+        }
+
+        header .animated-text {
+            display: inline;
+            background-image: linear-gradient(90deg, violet, indigo, blue, green, yellow, orange, red);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: gradientAnimation 3s linear infinite;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+            transition: opacity 0.5s ease;
+            background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
         }
 
         .translucent-box {
@@ -56,7 +108,7 @@
             overflow: hidden;
         }
 
-        .download-button::after {
+        .download-button::hover {
             content: "ⓘ Coming Soon";
             position: absolute;
             top: 0;
@@ -90,6 +142,9 @@
     </style>
 </head>
 <body>
+        <header>
+        <span class="animated-text">Hypersonic studios's Creations</span>
+        </header>
     <div class="background">
         <div class="translucent-box">
             <h1>Pasai Dating Simulator</h1>
@@ -100,6 +155,9 @@
             <button class="back-button" onclick="window.history.back();">Back</button>
         </div>
     </div>
+        <footer>
+        © 2024 Pasai's Website | Contact: mech.4000xtrem@gmail.com | insta id @pavanonlyathame pls follow
+    </footer>
 </body>
 </html>
 

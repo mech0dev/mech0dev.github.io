@@ -187,40 +187,40 @@
                 padding: 8px 15px;
                 font-size: 0.9em;
             }
-
+        }
             
-    .button2 {
-    position: relative;
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 8px;
-    overflow: hidden;
-    background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
-    background-size: 400% 400%;
-    animation: rainbowAnimation 3s linear infinite;
-    cursor: pointer;
-}
+        .button2 {
+        position: relative;
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 18px;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        overflow: hidden;
+        background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
+        background-size: 400% 400%;
+        animation: rainbowAnimation 3s linear infinite;
+        cursor: pointer;
+    }
 
-@keyframes rainbowAnimation {
-    0% {
-        background-position: 0% 50%;
+    @keyframes rainbowAnimation {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
 
-.button2:hover {
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-}
+    .button2:hover {
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
 
     </style>
 </head>

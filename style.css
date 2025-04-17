@@ -1,0 +1,336 @@
+/* ========================
+   Base Styles
+======================== */
+body, html {
+    min-height: 100vh;
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    text-align: center;
+}
+
+img {
+    width: 100px;
+    height: auto;
+    border-radius: 100%;
+    transition: transform 0.3s;
+}
+
+img:hover {
+    transform: rotate(5deg) scale(1.1);
+}
+/* ========================
+   Layout & Background
+======================== */
+.background {
+    background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 60px;
+}
+
+.background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: -1;
+}
+/* ========================
+   Header & Footer
+======================== */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 2em;
+    background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+    color: #fff;
+    /* Remove this line to prevent the entire header from fading out */
+    transition: none; 
+}
+
+header .animated-text {
+    display: inline-block;
+    font-weight: bold;
+    background-image: linear-gradient(90deg, violet, indigo, blue, green, yellow, orange, red);
+    background-size: 300% 100%;
+    background-position: left;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbowText 5s linear infinite;
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    width: 100%;
+    bottom: 0;
+    transition: opacity 0.5s ease;
+    background-image: url('files/light-blue-green-background-with-bubbles-modern-abstract-illustration-with-colorful-circle-shapes-pattern-for-websites-vector.jpg');
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
+}
+
+@keyframes rainbowText {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
+/* ========================
+   Components
+======================== */
+.translucent-box {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+}
+
+.button {
+    background-color: #007BFF;
+    background-image: linear-gradient(to bottom right, #007BFF, #0056b3);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 20px 0;
+    transition: background 0.3s, transform 0.3s;
+    font-family: fantasy;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-image: linear-gradient(to bottom right, #0056b3, #003f7f);
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.button2 {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
+    background-size: 400% 400%;
+    animation: rainbowAnimation 3s linear infinite;
+    cursor: pointer;
+}
+
+.button2:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.back-button {
+    background-color: #FF6347;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 20px;
+    transition: background 0.3s, transform 0.3s;
+}
+
+.back-button:hover {
+    background-color: #D24B2A;
+    transform: scale(1.05);
+}
+
+.download-button {
+    position: relative;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+    font-size: 1.2em;
+    margin-top: 20px;
+    transition: background 0.3s, transform 0.3s;
+    overflow: hidden;
+}
+
+.download-button::after {
+    content: "ⓘ Coming Soon";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    color: black;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* ========================
+   Forms & Uploads
+======================== */
+.custom-input,
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #007BFF;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1em;
+    background-color: #f0f8ff;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    color: #333;
+}
+
+.custom-input:focus,
+input[type="file"]:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.upload-form {
+    margin-top: 20px;
+}
+
+.file-list {
+    margin-top: 30px;
+}
+
+.warning {
+    color: red;
+}
+/* ========================
+   Music Player
+======================== */
+.music-player {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.music-player select {
+    padding: 10px;
+    font-size: 1em;
+    margin-right: 10px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.music-player audio {
+    width: 100%;
+    appearance: none;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
+    border-radius: 10px;
+    padding: 5px;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.music-player audio::-webkit-media-controls-panel {
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.music-player audio::-webkit-media-controls-play-button,
+.music-player audio::-webkit-media-controls-current-time-display,
+.music-player audio::-webkit-media-controls-time-remaining-display {
+    color: #fff;
+}
+
+.music-player audio::-webkit-media-controls-timeline {
+    background: #007BFF;
+    border-radius: 5px;
+}
+/* ========================
+   Animations
+======================== */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; opacity: 0; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes rainbowAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* ========================
+   Responsive Design
+======================== */
+@media (max-width: 600px) {
+    .translucent-box {
+        font-size: 1.2em;
+        margin: 20px;
+    }
+
+    .button {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+/* ========================
+   Miscellaneous Elements
+======================== */
+canvas {
+    display: block;
+    background-color: #70c5ce;
+    border: 2px solid #000;
+    border-radius: 10px;
+}
+
+.dropdown {
+    margin: 10px 0;
+}
+
+.lol {
+    vertical-align: top;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: lightgoldenrodyellow;
+}

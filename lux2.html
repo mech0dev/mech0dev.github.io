@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Masked Theme Ripple Transition</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      overflow: hidden;
+    }
+
+    body.light {
+      background-color: #ffffff;
+      color: #111;
+    }
+
+    body.dark {
+      background-color: #0c0c1c;
+      color: #eee;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: color 0.5s ease;
+    }
+
+    .theme-mask {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .theme-ripple {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: #0c0c1c;
+      border-radius: 12px;
+      animation: ripple-expand 1s forwards ease-out;
+      z-index: 2;
+    }
+
+    @keyframes ripple-expand {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(20);
+        opacity: 1;
+      }
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      background: #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="light">
+  <div class="container">
+    <h1>Masked Theme Ripple</h1>
+    <p>This is a demo of the ripple-masked theme transition effect.</p>
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+
+  <div class="theme-mask" id="theme-mask"></div>
+
+  <script>
+    function toggleTheme() {
+      const isLight = document.body.classList.contains("light");
+      const newTheme = isLight ? "dark" : "light";
+      const ripple = document.createElement("div");
+      ripple.classList.add("theme-ripple");
+      ripple.style.backgroundColor = isLight ? "#0c0c1c" : "#ffffff";
+
+      const mask = document.getElementById("theme-mask");
+      mask.innerHTML = ""; // clear previous ripples
+      mask.appendChild(ripple);
+
+      // Delay theme switch
+      setTimeout(() => {
+        document.body.classList.remove(isLight ? "light" : "dark");
+        document.body.classList.add(newTheme);
+      }, 300);
+    }
+  </script>
+</body>
+</html>

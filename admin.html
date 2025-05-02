@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="files/android-chrome-192x192.png">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <script src="script.js"></script>
     <title>Admin Section</title>
 </head>
-<body>
+<body class="light">
+    <div id="particles-js"></div>  
     <header>
         <span class="animated-text">Welcome to the Admin Section</span>
     </header>
@@ -43,6 +46,8 @@
                     <source id="audioSource" src="" type="audio/mpeg">
                     Your browser does not support the audio element.
                 </audio>
+                <button class="theme-switcher" onclick="toggleTheme()"></button>
+                <div class="ripple-container" id="ripple-container"></div>
             </div>
             <p class="warning">Note: This is a beta feature and may take up to 2 days to upload.</p>
             <form class="upload-form" action="upload.php" method="post" enctype="multipart/form-data">

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="pasai's remote stuffs, website, tools">
+  <link rel="icon" type="image/png" href="files/android-chrome-192x192.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="android-chrome-192x192.ico">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Supabase Login Example</title>
+</head>
+<body class="light">
+  <div id="particles-js"></div>
+  <header>
+    <span class="animated-text">Welcome to Pasai's Remote Stuffs</span>
+  </header>
+  <div class="background">
+    <div class="translucent-box">
+      <h2>Login</h2>
+      <input type="email" id="email" class="custom-input" placeholder="Email"><br>
+      <input type="password" id="password" class="custom-input" placeholder="Password"><br>
+      <button class="button" onclick="signUp()">Sign Up</button>
+      <button class="button" onclick="signIn()">Login</button>
+
+      <div id="game" style="display:none;">
+        <h3>Welcome! <span id="user"></span></h3>
+        <p>Your Progress: <span id="progress">0</span>%</p>
+        <button class="button" onclick="increaseProgress()">Increase Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <script defer>
+    // Ensure Supabase is loaded before this runs
+    window.addEventListener("DOMContentLoaded", () => {
+      const SUPABASE_URL = "https://vwkbwukzhgmnknpaeowu.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ3a2J3dWt6aGdtbmtucGFlb3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxODkzMjUsImV4cCI6MjA2MTc2NTMyNX0.ButW5X_m0nN8yfmBK-_Q8-HsYgnEphPLJgerLhPJ120";
+      const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      // Make global for buttons to use
+      window.signUp = async function () {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const { data, error } = await supabaseClient.auth.signUp({ email, password });
+        if (error) return alert("Sign-up failed: " + error.message);
+        alert("Sign-up success! Check your email for confirmation.");
+      };
+
+      window.signIn = async function () {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) return alert("Login failed: " + error.message);
+        loadGame();
+      };
+
+      async function loadGame() {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (!user) return;
+        document.getElementById("game").style.display = "block";
+        document.getElementById("user").textContent = user.email;
+
+        const { data } = await supabaseClient
+          .from("progress")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
+
+        if (!data) {
+          await supabaseClient.from("progress").insert({ user_id: user.id });
+          document.getElementById("progress").textContent = "0";
+        } else {
+          document.getElementById("progress").textContent = data.progress;
+        }
+      }
+
+      window.increaseProgress = async function () {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        const { data } = await supabaseClient
+          .from("progress")
+          .select("*")
+          .eq("user_id", user.id)
+          .single();
+
+        const newProgress = Math.min(100, data.progress + 10);
+        await supabaseClient
+          .from("progress")
+          .update({ progress: newProgress })
+          .eq("user_id", user.id);
+
+        document.getElementById("progress").textContent = newProgress;
+      };
+
+      // Auto login if session exists
+      supabaseClient.auth.getSession().then(({ data: { session } }) => {
+        if (session) loadGame();
+      });
+    });
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

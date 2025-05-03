@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="pasai's remote stuffs, website, tools">
+  <link rel="icon" type="image/png" href="files/android-chrome-192x192.png">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="icon" href="android-chrome-192x192.ico">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <script src="../script.js"></script>
+  <title>Pasai's Remote Stuffs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <script defer>
+    window.addEventListener("DOMContentLoaded", async () => {
+      const SUPABASE_URL = "https://vwkbwukzhgmnknpaeowu.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ3a2J3dWt6aGdtbmtucGFlb3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxODkzMjUsImV4cCI6MjA2MTc2NTMyNX0.ButW5X_m0nN8yfmBK-_Q8-HsYgnEphPLJgerLhPJ120"; // your real key
+      const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert("You must log in first.");
+        window.location.href = "../login.html";
+        return;
+      }
+
+      const { data: { user } } = await supabase.auth.getUser();
+
+      // Get level from backend
+      const { data, error } = await supabase
+        .from("progress")
+        .select("level")
+        .eq("user_id", user.id)
+        .single();
+
+      if (error || !data) {
+        alert("Could not verify your level.");
+        window.location.href = "../login.html";
+        return;
+      }
+
+      const currentLevel = 0; // Adjust this for the current level
+
+      if (data.level < currentLevel) {
+        alert("You haven't unlocked this level yet.");
+        window.location.href = `level-${data.level}.html`;
+        return;
+      }
+
+      // Show the content if level is allowed
+      document.getElementById("level-content").style.display = "block";
+    });
+  </script>
+
+<script type="module">
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+  const SUPABASE_URL = "https://vwkbwukzhgmnknpaeowu.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ3a2J3dWt6aGdtbmtucGFlb3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxODkzMjUsImV4cCI6MjA2MTc2NTMyNX0.ButW5X_m0nN8yfmBK-_Q8-HsYgnEphPLJgerLhPJ120";
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const codeInput = document.getElementById("secretCode");
+  const submitBtn = document.getElementById("submitCode");
+
+  submitBtn.addEventListener("click", async () => {
+    const inputCode = codeInput.value.trim();
+    const levelMatch = window.location.pathname.match(/level-(\d+)/);
+    if (!levelMatch) return alert("Invalid level page.");
+
+    const currentLevel = parseInt(levelMatch[1]);
+
+    // Get logged-in user
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      alert("You must be logged in.");
+      return;
+    }
+
+    // Fetch correct code from Supabase
+    const { data: levelData, error: codeError } = await supabase
+      .from("level_codes")
+      .select("code")
+      .eq("level", currentLevel)
+      .single();
+
+    if (codeError || !levelData) {
+      alert("Level data not found.");
+      return;
+    }
+
+    if (inputCode !== levelData.code) {
+      alert("Incorrect code.");
+      return;
+    }
+
+    // Update progress
+    const { error: updateError } = await supabase
+      .from("progress")
+      .update({ level: currentLevel + 1 })
+      .eq("user_id", user.id);
+
+    if (updateError) {
+      alert("Failed to update progress.");
+    } else {
+      window.location.href = `level-${currentLevel + 1}.html`;
+    }
+  });
+</script>
+
+
+</head>
+<body class="light">
+    <div id="particles-js"></div>
+    <header>
+        <span class="animated-text">Welcome to level 0</span>
+    </header>
+    <div class="background">
+        <div class="translucent-box">
+           <p>yoo</p>
+           <p>welcome to PRAG</p>
+           <p>this is a tutoriaL PAGE. i will guide you</p>
+           <p>Rules:</p>
+           <p>1. dont hack this website i am just a beginner programer</p>
+           <p>2. dont cheat in a way that will ruin everyones fun</p>
+           <p>3. enjoy or else LARRY will come after you</p>
+           <p> lets start enter 12345 in the input and progress to the next level </p>
+           <input type="text" class="custom-input" id="secretCode" placeholder="Enter secret code">
+
+        </div>
+        <button class="button" id="submitCode">Next</button>
+        <button class="theme-switcher" onclick="toggleTheme()"></button>
+        <div class="ripple-container" id="ripple-container"></div>
+    </div>
+    <footer>
+        © 2024 Pasai's Website | Contact: mech.4000xtrem@gmail.com | insta id @pavanonlyathame pls follow
+    </footer>
+</body>
+</html>

@@ -63,82 +63,72 @@ function triggerRippleBurst() {
 function toggleTheme() {
   const isLight = document.body.classList.contains("light");
 
-  document.body.classList.remove(isLight ? "light" : "dark");
-  document.body.classList.add(isLight ? "dark" : "light");
+  // Switch classes
+  document.body.classList.toggle("light", !isLight);
+  document.body.classList.toggle("dark", isLight);
 
-  setTimeout(() => {
-    loadParticles(isLight ? darkConfig : lightConfig);
-  }, 300);
+  // Switch particle config
+  loadParticles(isLight ? darkConfig : lightConfig);
 
+  // Trigger ripple burst
   triggerRippleBurst();
 }
 
-function checkPassword() {
-    const password = document.getElementById('password').value;
-    const passwordMap = {
-        '15423': 'admin.html', // Example: Redirect to admin section
-    };
 
-    if (password in passwordMap) {
-        window.location.href = passwordMap[password];
-    } else {
-        alert('Incorrect password. Please try again.');
-    }
-    }
+const SUPABASE_URL = "https://vwkbwukzhgmnknpaeowu.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ3a2J3dWt6aGdtbmtucGFlb3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxODkzMjUsImV4cCI6MjA2MTc2NTMyNX0.ButW5X_m0nN8yfmBK-_Q8-HsYgnEphPLJgerLhPJ120"; // truncated for safety
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const SUPABASE_URL = "https://vwkbwukzhgmnknpaeowu.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ3a2J3dWt6aGdtbmtucGFlb3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxODkzMjUsImV4cCI6MjA2MTc2NTMyNX0.ButW5X_m0nN8yfmBK-_Q8-HsYgnEphPLJgerLhPJ120"; // your real key
+async function signUp() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-document.addEventListener("DOMContentLoaded", () => {
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const signupBtn = document.getElementById("signup");
-  const loginBtn = document.getElementById("login");
-
-  signupBtn.addEventListener("click", async () => {
-    const { error: signUpError } = await supabase.auth.signUp({
-      email: emailInput.value,
-      password: passwordInput.value
-    });
-
-    if (signUpError) {
-      alert(signUpError.message);
-    } else {
-      const { data: { user } } = await supabase.auth.getUser();
-      await supabase.from("progress").insert({
-        user_id: user.id,
-        level: 0
-      });
-      alert("Sign up successful. Please log in.");
-    }
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
   });
 
-  loginBtn.addEventListener("click", async () => {
-    const { error: loginError } = await supabase.auth.signInWithPassword({
-      email: emailInput.value,
-      password: passwordInput.value
-    });
+  if (error) {
+    alert(error.message);
+    return;
+  }
 
-    if (loginError) {
-      alert(loginError.message);
-    } else {
-      const { data: { user } } = await supabase.auth.getUser();
+  // The user will need to confirm their email before logging in
+  alert("Sign up successful! Please check your email to confirm and then log in.");
+}
 
-      const { data, error: progressError } = await supabase
-        .from("progress")
-        .select("level")
-        .eq("user_id", user.id)
-        .single();
+async function signIn() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-      if (progressError || !data) {
-        alert("No progress found. Contact support.");
-        return;
-      }
-
-      const level = data.level;
-      window.location.href = `level-${level}.html`;
-    }
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
   });
-});
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  const user = data.user;
+  if (!user) {
+    alert("Login failed or user not confirmed.");
+    return;
+  }
+
+  const { data: progressData, error: progressError } = await supabase
+    .from("progress")
+    .select("level")
+    .eq("user_id", user.id)
+    .single();
+
+  if (progressError || !progressData) {
+    alert("No progress found. Initializing...");
+    await supabase.from("progress").insert({ user_id: user.id, level: 0 });
+    window.location.href = "level-0.html";
+  } else {
+    const level = progressData.level;
+    window.location.href = `dev stuff/level-${level}.html`;
+  }
+}

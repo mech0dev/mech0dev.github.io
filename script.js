@@ -85,3 +85,60 @@ function checkPassword() {
         alert('Incorrect password. Please try again.');
     }
     }
+
+    const SUPABASE_URL = "https://vwkbwukzhgmnknpaeowu.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ3a2J3dWt6aGdtbmtucGFlb3d1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxODkzMjUsImV4cCI6MjA2MTc2NTMyNX0.ButW5X_m0nN8yfmBK-_Q8-HsYgnEphPLJgerLhPJ120"; // your real key
+
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+document.addEventListener("DOMContentLoaded", () => {
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const signupBtn = document.getElementById("signup");
+  const loginBtn = document.getElementById("login");
+
+  signupBtn.addEventListener("click", async () => {
+    const { error: signUpError } = await supabase.auth.signUp({
+      email: emailInput.value,
+      password: passwordInput.value
+    });
+
+    if (signUpError) {
+      alert(signUpError.message);
+    } else {
+      const { data: { user } } = await supabase.auth.getUser();
+      await supabase.from("progress").insert({
+        user_id: user.id,
+        level: 0
+      });
+      alert("Sign up successful. Please log in.");
+    }
+  });
+
+  loginBtn.addEventListener("click", async () => {
+    const { error: loginError } = await supabase.auth.signInWithPassword({
+      email: emailInput.value,
+      password: passwordInput.value
+    });
+
+    if (loginError) {
+      alert(loginError.message);
+    } else {
+      const { data: { user } } = await supabase.auth.getUser();
+
+      const { data, error: progressError } = await supabase
+        .from("progress")
+        .select("level")
+        .eq("user_id", user.id)
+        .single();
+
+      if (progressError || !data) {
+        alert("No progress found. Contact support.");
+        return;
+      }
+
+      const level = data.level;
+      window.location.href = `level-${level}.html`;
+    }
+  });
+});
